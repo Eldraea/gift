@@ -1,35 +1,29 @@
-package com.efreiproject.gift.model;
+package com.efreiproject.gift.reports.shared;
 
 import java.time.LocalDate;
 import java.util.UUID;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
-
-@Entity
-public class Report {
+public class ReportDto {
 	
-	@Id
-	@GeneratedValue
-	private UUID id;
 	
-	@OneToOne(fetch= FetchType.LAZY)
-	@JsonIgnore
-	private Internship internship;
-	
-	private LocalDate dateOfReport;
+	private long id;
+	private UUID reportId;
+	private LocalDate deadLineForReport;
 	private boolean reportDone;
 	private float technicalMark;
 	private float communicationMark;
 	private String tutorNote;
 	
-	public UUID getId() {
+	
+	public long getId() {
 		return id;
+	}
+	public UUID getReportId() {
+		return reportId;
+	}
+	public LocalDate getDeadLineForReport() {
+		return deadLineForReport;
 	}
 	public boolean isReportDone() {
 		return reportDone;
@@ -43,10 +37,15 @@ public class Report {
 	public String getTutorNote() {
 		return tutorNote;
 	}
-	public void setId(UUID id) {
+	public void setId(long id) {
 		this.id = id;
 	}
-
+	public void setReportId(UUID reportId) {
+		this.reportId = reportId;
+	}
+	public void setDeadLineForReport(LocalDate deadLineForReport) {
+		this.deadLineForReport = deadLineForReport;
+	}
 	public void setReportDone(boolean reportDone) {
 		this.reportDone = reportDone;
 	}
@@ -59,21 +58,10 @@ public class Report {
 	public void setTutorNote(String tutorNote) {
 		this.tutorNote = tutorNote;
 	}
-	public LocalDate getDateOfReport() {
-		return dateOfReport;
-	}
-	public void setDateOfReport(LocalDate dateOfReport) {
-		this.dateOfReport = dateOfReport;
-	}
-	public Internship getInternship() {
-		return internship;
-	}
-	public void setInternship(Internship internship) {
-		this.internship = internship;
-	}
 	
 	
+
 	
 	
-	
+
 }

@@ -1,35 +1,60 @@
-package com.efreiproject.gift.model;
+package com.efreiproject.gift.reports.data;
 
 import java.time.LocalDate;
 import java.util.UUID;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.efreiproject.gift.internships.controllers.InternshipEntity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 
 @Entity
-public class Report {
-	
+@Table(name= "report")
+public class ReportEntity {
+
 	@Id
 	@GeneratedValue
-	private UUID id;
+	private long id;
 	
-	@OneToOne(fetch= FetchType.LAZY)
-	@JsonIgnore
-	private Internship internship;
+	@Column(nullable= false, unique = true)
+	private UUID reportId;
 	
-	private LocalDate dateOfReport;
+	@Column(nullable= false)
+	private LocalDate deadLineForReport;
+	
+	@Column(nullable= false)
 	private boolean reportDone;
+	
+	@Column(nullable= false)
 	private float technicalMark;
+	
+	@Column(nullable= false)
 	private float communicationMark;
+	
+	@Column
 	private String tutorNote;
 	
-	public UUID getId() {
+	@OneToOne(mappedBy="report")
+	private InternshipEntity internship;
+	
+	
+	
+
+	public ReportEntity() {
+		super();
+	}
+	public long getId() {
 		return id;
+	}
+	public UUID getReportId() {
+		return reportId;
+	}
+	public LocalDate getDeadLineForReport() {
+		return deadLineForReport;
 	}
 	public boolean isReportDone() {
 		return reportDone;
@@ -43,10 +68,15 @@ public class Report {
 	public String getTutorNote() {
 		return tutorNote;
 	}
-	public void setId(UUID id) {
+	public void setId(long id) {
 		this.id = id;
 	}
-
+	public void setReportId(UUID reportId) {
+		this.reportId = reportId;
+	}
+	public void setDeadLineForReport(LocalDate deadLineForReport) {
+		this.deadLineForReport = deadLineForReport;
+	}
 	public void setReportDone(boolean reportDone) {
 		this.reportDone = reportDone;
 	}
@@ -59,20 +89,12 @@ public class Report {
 	public void setTutorNote(String tutorNote) {
 		this.tutorNote = tutorNote;
 	}
-	public LocalDate getDateOfReport() {
-		return dateOfReport;
-	}
-	public void setDateOfReport(LocalDate dateOfReport) {
-		this.dateOfReport = dateOfReport;
-	}
-	public Internship getInternship() {
+	public InternshipEntity getInternship() {
 		return internship;
 	}
-	public void setInternship(Internship internship) {
+	public void setInternship(InternshipEntity internship) {
 		this.internship = internship;
 	}
-	
-	
 	
 	
 	

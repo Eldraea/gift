@@ -1,39 +1,27 @@
-package com.efreiproject.gift.model;
+package com.efreiproject.gift.soutenances.shared;
 
 import java.time.LocalDate;
 import java.util.UUID;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
-
-@Entity
-public class Soutenance {
-	@Id
-	@GeneratedValue
-	private UUID id;
+public class SoutenanceDto {
 	
-	private LocalDate dateOfSoutenance;
-	
-	@OneToOne(fetch= FetchType.LAZY)
-	@JsonIgnore
-	private Internship internship;
+	private long id;
+	private UUID soutenanceId;
+	private LocalDate deadLineForSoutenance;
 	private boolean soutenanceDone;
 	private float technicalMark;
 	private float communicationMark;
 	private String tutorNote;
 	
 	
-	public UUID getId() {
+	public long getId() {
 		return id;
 	}
-
-	public LocalDate getDateOfSoutenance() {
-		return dateOfSoutenance;
+	public UUID getSoutenanceId() {
+		return soutenanceId;
+	}
+	public LocalDate getDeadLineForSoutenance() {
+		return deadLineForSoutenance;
 	}
 	public boolean isSoutenanceDone() {
 		return soutenanceDone;
@@ -47,13 +35,14 @@ public class Soutenance {
 	public String getTutorNote() {
 		return tutorNote;
 	}
-
-	public void setId(UUID id) {
+	public void setId(long id) {
 		this.id = id;
 	}
-
-	public void setDateOfSoutenance(LocalDate dateOfSoutenance) {
-		this.dateOfSoutenance = dateOfSoutenance;
+	public void setSoutenanceId(UUID soutenanceId) {
+		this.soutenanceId = soutenanceId;
+	}
+	public void setDeadLineForSoutenance(LocalDate deadLineForSoutenance) {
+		this.deadLineForSoutenance = deadLineForSoutenance;
 	}
 	public void setSoutenanceDone(boolean soutenanceDone) {
 		this.soutenanceDone = soutenanceDone;
@@ -67,16 +56,5 @@ public class Soutenance {
 	public void setTutorNote(String tutorNote) {
 		this.tutorNote = tutorNote;
 	}
-
-	public Internship getInternship() {
-		return internship;
-	}
-
-	public void setInternship(Internship internship) {
-		this.internship = internship;
-	}
-
-
 	
-
 }
