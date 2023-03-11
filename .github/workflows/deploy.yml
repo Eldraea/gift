@@ -38,9 +38,9 @@ jobs:
           echo "$PRIVATE_KEY" > private_key.pem && chmod 600 private_key.pem
           cat private_key.pem
           ssh -o StrictHostKeyChecking=no -i private_key.pem ${USER_NAME}@${HOSTNAME} '
-            rm -rf /home/ec2-user/gift/gift
+            rm -rf /home/ec2-user/gift/
             git clone git@github.com:Eldraea/gift.git
-            cd gift/gift
+            cd gift
             git checkout master
             git pull origin master
             sudo chmod +x ./deploy.sh

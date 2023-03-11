@@ -1,6 +1,6 @@
 version: '3.3'
 services:
-  db:
+  mysqldb:
     image: mysql
     restart: always
     environment:
@@ -14,5 +14,20 @@ services:
       - '3310'
     volumes:
       - my-db:/var/lib/mysql
+  app:
+      depends_on:
+        - mysqldb
+      build: .
+      restart: on-failure
+      environment:
+        DB_URL: jdbc:mysql://mysqldb:3306/my-gift
+        DB_USERNAME: root
+        DB_PASSWORD: root
+      ports:
+        - '8080:8080'
+      volumes:
+        - .m2:/root/.m2
+      stdin_open: true
+      tty: true
 volumes:
   my-db:
