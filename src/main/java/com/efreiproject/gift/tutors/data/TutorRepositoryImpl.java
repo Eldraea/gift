@@ -25,7 +25,8 @@ public class TutorRepositoryImpl implements TutorRepositoryCustom {
 
         predicates.add(cb.equal(book.get("email"), email));
         cq.where(predicates.toArray(new Predicate[0]));
-        return em.createQuery(cq).getResultList().get(0);
+        List<TutorEntity> resultList = em.createQuery(cq).getResultList();
+        return resultList.isEmpty() ? null : resultList.get(0);
     }
 
     @Override
@@ -38,6 +39,7 @@ public class TutorRepositoryImpl implements TutorRepositoryCustom {
 
         predicates.add(cb.equal(book.get("username"), username));
         cq.where(predicates.toArray(new Predicate[0]));
-        return em.createQuery(cq).getResultList().get(0);
+        List<TutorEntity> resultList = em.createQuery(cq).getResultList();
+        return resultList.isEmpty() ? null : resultList.get(0);
     }
 }
