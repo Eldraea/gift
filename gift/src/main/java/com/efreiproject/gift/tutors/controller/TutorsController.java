@@ -1,10 +1,15 @@
 package com.efreiproject.gift.tutors.controller;
 
+import com.efreiproject.gift.tutors.model.LoginRequestModel;
+import com.efreiproject.gift.tutors.model.TokenResponse;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +23,7 @@ import com.efreiproject.gift.tutors.shared.TutorDto;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("giftapi/v1")
+@RequestMapping("/")
 public class TutorsController {
 	
 	@Autowired
@@ -32,6 +37,24 @@ public class TutorsController {
 		TutorDto newTutor = tutorService.createTutor(tutorDto);
 		CreateTutorResponseModel tutorToReturn = modelMapper.map(newTutor, CreateTutorResponseModel.class);
 		return ResponseEntity.status(HttpStatus.CREATED).body(tutorToReturn);
+	}
+
+	@PostMapping("/login")
+	public ResponseEntity<TokenResponse> login(@Valid @RequestBody LoginRequestModel loginRequest) {
+		TokenResponse token = tutorService.login(loginRequest);
+		if(token == null){
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
+		}else{
+			return ResponseEntity.status(HttpStatus.OK).body(token);
+		}
+	}
+
+	@PostMapping("/test")
+	public Boolean test() {
+		// TODO: to be removed
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		System.out.println(((UserDetails)authentication.getPrincipal()).getUsername());
+		return true;
 	}
 
 }

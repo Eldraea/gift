@@ -1,0 +1,18 @@
+version: '3.3'
+services:
+  db:
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'my-gift'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'root'
+      MYSQL_ROOT_PASSWORD: 'root'
+    ports:
+      - '3310:3306'
+    expose:
+      - '3310'
+    volumes:
+      - my-db:/var/lib/mysql
+volumes:
+  my-db:
