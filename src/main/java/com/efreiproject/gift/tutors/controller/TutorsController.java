@@ -22,6 +22,8 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/")
+@CrossOrigin(
+		origins = "https://dabik.github.io", allowCredentials = "true", allowedHeaders = "authorization, content-type, xsrf-token, Access-Control-Allow-Origin,X-Amz-Date, access-control-allow-origin" )
 public class TutorsController {
 	
 	@Autowired

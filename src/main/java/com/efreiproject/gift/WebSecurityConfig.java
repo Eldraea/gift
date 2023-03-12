@@ -1,5 +1,6 @@
 package com.efreiproject.gift;
 
+import com.efreiproject.gift.auth.CorsFilter;
 import com.efreiproject.gift.auth.JwtAuthenticationEntryPoint;
 import com.efreiproject.gift.auth.JwtRequestFilter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
@@ -30,6 +32,8 @@ public class WebSecurityConfig   {
     private JwtRequestFilter jwtRequestFilter;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private CorsFilter  corsFilter;
 
 
     @Autowired
@@ -47,7 +51,7 @@ public class WebSecurityConfig   {
             httpSecurity.csrf().disable()
                 // dont authenticate this particular request
                 .authorizeRequests()
-                    .requestMatchers("/login","/register")
+                    .requestMatchers("/*")
                 .permitAll().
                 // all other requests need to be authenticated
                         anyRequest().authenticated().and().
@@ -58,6 +62,7 @@ public class WebSecurityConfig   {
 
         // Add a filter to validate the tokens with every request
         httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+        httpSecurity.addFilterBefore(corsFilter, ChannelProcessingFilter.class);
         return httpSecurity.build();
     }
 
