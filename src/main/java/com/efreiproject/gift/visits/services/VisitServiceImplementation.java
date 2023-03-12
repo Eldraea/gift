@@ -1,5 +1,10 @@
 package com.efreiproject.gift.visits.services;
 
+import com.efreiproject.gift.exceptions.SoutenanceNullPointerException;
+import com.efreiproject.gift.internships.data.InternshipEntity;
+import com.efreiproject.gift.soutenances.data.SoutenanceEntity;
+import com.efreiproject.gift.soutenances.shared.SoutenanceDto;
+import com.efreiproject.gift.visits.data.VisitRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,7 +13,6 @@ import com.efreiproject.gift.exceptions.SoutenanceNotFoundException;
 import com.efreiproject.gift.exceptions.VisitNotFoundException;
 import com.efreiproject.gift.exceptions.VisitNullPointerException;
 import com.efreiproject.gift.visits.data.VisitEntity;
-import com.efreiproject.gift.visits.data.VisitRepository;
 import com.efreiproject.gift.visits.shared.VisitDto;
 
 
@@ -21,37 +25,28 @@ public class VisitServiceImplementation implements VisitService {
 	public VisitServiceImplementation(VisitRepository visitRepository) {
 		this.visitRepository = visitRepository;
 	}
-	
-	public VisitDto createVisit(VisitDto visitToCreate) {
-		if(visitToCreate == null)
-			throw new VisitNullPointerException("You must provide a visit");
-		visitRepository.save(new ModelMapper().map(visitToCreate, VisitEntity.class));
-		return visitToCreate;
-	}
-	
-	public VisitDto updateVisit(VisitDto visitToUpdate) {
+
+
+	@Override
+	public VisitDto updateVisit(InternshipEntity internshipEntity, VisitDto visitToUpdate) {
 		if(visitToUpdate == null)
-			throw new VisitNullPointerException("You must provide a report");
-		VisitEntity visitEntity = visitRepository.findById(visitToUpdate.getId()).get();
+			throw new VisitNullPointerException("You must provide a visit");
+		VisitEntity visitEntity = visitRepository.getVisitByInternshipId(internshipEntity);
 		if(visitEntity == null)
 			throw new VisitNotFoundException("There is no visit with the id:" + visitToUpdate.getId());
-		visitRepository.save(visitEntity);
-		return visitToUpdate;
+		VisitEntity newVisitEntity = new ModelMapper().map(visitToUpdate, VisitEntity.class);
+		visitRepository.save(newVisitEntity);
+		VisitDto newVisitDto = new ModelMapper().map(newVisitEntity, VisitDto.class);
+		return newVisitDto;
 	}
-	
-	public VisitDto getSVisit(long id) {
-		VisitEntity visitEntity = visitRepository.findById(id).get();
-		if(visitEntity == null)
-			throw new VisitNotFoundException("There is no visit with the id:" + id);
-		return new ModelMapper().map(visitEntity, VisitDto.class);	
-	}
-	
-	public void deleteSoutenance(long id){
-		VisitEntity visitEntity = visitRepository.findById(id).get();
-		if(visitEntity == null)
-			throw new SoutenanceNotFoundException("There is no visit with the id:" + id);
-		visitRepository.delete(visitEntity);	
-	}
-	
 
+	@Override
+	public VisitDto createVisit(long internshipId) {
+		VisitDto newVisitDto= new VisitDto();
+		newVisitDto.setVisitDone(false);
+		newVisitDto.setInternshipId(internshipId);
+		newVisitDto.setTutorNote("");
+		this.visitRepository.save(new ModelMapper().map(newVisitDto,VisitEntity.class));
+		return newVisitDto;
+	}
 }

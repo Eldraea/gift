@@ -3,7 +3,7 @@ package com.efreiproject.gift.companyTutors.data;
 import java.util.List;
 import java.util.UUID;
 
-import com.efreiproject.gift.internships.controllers.InternshipEntity;
+import com.efreiproject.gift.internships.data.InternshipEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -36,14 +36,7 @@ public class CompanyTutorEntity {
 	
 	@Column(nullable= false, unique=true)
 	private String companyTutorEmail;
-	
-	@OneToMany(mappedBy="companyTutor")
-	private List<InternshipEntity> internships;
-	
-	@OneToMany(mappedBy="companyTutor")
-	private List<InternshipEntity> archivedStudents;
-	
-	
+
 
 	public CompanyTutorEntity() {
 		super();
@@ -77,9 +70,6 @@ public class CompanyTutorEntity {
 		return companyTutorEmail;
 	}
 
-	public List<InternshipEntity> getInternships() {
-		return internships;
-	}
 
 	public void setId(long id) {
 		this.id = id;
@@ -109,9 +99,6 @@ public class CompanyTutorEntity {
 		this.companyTutorEmail = companyTutorEmail;
 	}
 
-	public void setInternships(List<InternshipEntity> internships) {
-		this.internships = internships;
-	}
 
 	
 	

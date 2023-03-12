@@ -45,7 +45,6 @@ public class StudentRepositoryCustomImplementation implements StudentRepositoryC
 
     @Override
     public void deleteByIdAndTutorId(Long id, TutorEntity entity) {
-        System.out.println("enter");
         CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
         CriteriaDelete<StudentEntity> criteriaDelete = criteriaBuilder.createCriteriaDelete(StudentEntity.class);
         Root<StudentEntity> root = criteriaDelete.from(StudentEntity.class);

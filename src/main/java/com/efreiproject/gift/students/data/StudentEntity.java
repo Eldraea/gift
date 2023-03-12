@@ -1,10 +1,8 @@
 package com.efreiproject.gift.students.data;
 
-import java.time.LocalDate;
 import java.util.List;
-import java.util.UUID;
 
-import com.efreiproject.gift.internships.controllers.InternshipEntity;
+import com.efreiproject.gift.internships.data.InternshipEntity;
 import com.efreiproject.gift.tutors.data.TutorEntity;
 
 import jakarta.persistence.*;
@@ -38,21 +36,11 @@ public class StudentEntity {
 	@Column(nullable= false, unique = true)
 	private String email;
 	
-	@Column(nullable= false)
-
-	private LocalDate creationDate;
-	
 	@Column
 	private String pictureUrl;
 	
 	@OneToMany(mappedBy="student")
 	private List<InternshipEntity> internships;
-
-
-	@PrePersist
-	void createdAt() {
-		this.creationDate =LocalDate.now();
-	}
 
 	public StudentEntity() {
 		super();
@@ -87,9 +75,6 @@ public class StudentEntity {
 		return email;
 	}
 
-	public LocalDate getCreationDate() {
-		return creationDate;
-	}
 
 
 	public String getPictureUrl() {
@@ -129,9 +114,6 @@ public class StudentEntity {
 		this.email = email;
 	}
 
-	public void setCreationDate(LocalDate creationDate) {
-		this.creationDate = creationDate;
-	}
 
 
 	public void setPictureUrl(String pictureUrl) {

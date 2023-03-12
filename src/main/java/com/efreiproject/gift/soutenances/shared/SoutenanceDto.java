@@ -6,7 +6,8 @@ import java.util.UUID;
 public class SoutenanceDto {
 	
 	private long id;
-	private UUID soutenanceId;
+
+	private long internship_id;
 	private LocalDate deadLineForSoutenance;
 	private boolean soutenanceDone;
 	private float technicalMark;
@@ -16,9 +17,6 @@ public class SoutenanceDto {
 	
 	public long getId() {
 		return id;
-	}
-	public UUID getSoutenanceId() {
-		return soutenanceId;
 	}
 	public LocalDate getDeadLineForSoutenance() {
 		return deadLineForSoutenance;
@@ -38,9 +36,7 @@ public class SoutenanceDto {
 	public void setId(long id) {
 		this.id = id;
 	}
-	public void setSoutenanceId(UUID soutenanceId) {
-		this.soutenanceId = soutenanceId;
-	}
+
 	public void setDeadLineForSoutenance(LocalDate deadLineForSoutenance) {
 		this.deadLineForSoutenance = deadLineForSoutenance;
 	}
@@ -56,5 +52,13 @@ public class SoutenanceDto {
 	public void setTutorNote(String tutorNote) {
 		this.tutorNote = tutorNote;
 	}
-	
+
+
+	public long getInternship_id() {
+		return internship_id;
+	}
+
+	public void setInternship_id(long internship_id) {
+		this.internship_id = internship_id;
+	}
 }

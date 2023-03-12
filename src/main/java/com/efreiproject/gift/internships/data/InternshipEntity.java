@@ -1,4 +1,4 @@
-package com.efreiproject.gift.internships.controllers;
+package com.efreiproject.gift.internships.data;
 
 import java.time.LocalDate;
 import java.util.UUID;
@@ -28,29 +28,33 @@ public class InternshipEntity {
 	@Id
 	@GeneratedValue
 	private long id;
-	
-	@Column(nullable= false, unique = true)
-	private UUID internshipId;
-	
+
 	@ManyToOne(fetch= FetchType.LAZY)
 	private StudentEntity student;
+
+	@Column(nullable= false)
+	private String companyName;
+
+	@Column(nullable= false, unique=true)
+	private String companyAddress;
 	
-	@ManyToOne(fetch= FetchType.LAZY)
-	private CompanyEntity company;
-	
-	@OneToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name ="report_id", referencedColumnName="id")
+	@OneToOne(cascade=CascadeType.ALL, optional = true)
+	@JoinColumn(name ="report_id", referencedColumnName="id", nullable = true)
 	private ReportEntity report;
 
-	@OneToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name ="soutenance_id", referencedColumnName="id")
+	@OneToOne(cascade=CascadeType.ALL, optional = true)
+	@JoinColumn(name ="soutenance_id", referencedColumnName="id", nullable = true)
 	private SoutenanceEntity soutenance;
-	
-	@OneToOne @MapsId
-	private VisitEntity visite;
-	
-	@ManyToOne(fetch= FetchType.LAZY)
-	private CompanyTutorEntity companyTutor;
+
+	@OneToOne(cascade=CascadeType.ALL, optional = true)
+	@JoinColumn(name ="visit_id", referencedColumnName="id", nullable = true)
+	private VisitEntity visit;
+
+	@Column(nullable= false)
+	private String companyTutorFirstName;
+
+	@Column(nullable= false)
+	private String companyTutorLastName;
 	
 	@Column(nullable= false)
 	private LocalDate startingDate;
@@ -72,17 +76,11 @@ public class InternshipEntity {
 		return id;
 	}
 
-	public UUID getInternshipId() {
-		return internshipId;
-	}
 
 	public StudentEntity getStudent() {
 		return student;
 	}
 
-	public CompanyEntity getCompany() {
-		return company;
-	}
 
 	public ReportEntity getReport() {
 		return report;
@@ -90,14 +88,6 @@ public class InternshipEntity {
 
 	public SoutenanceEntity getSoutenance() {
 		return soutenance;
-	}
-
-	public VisitEntity getVisite() {
-		return visite;
-	}
-
-	public CompanyTutorEntity getCompanyTutor() {
-		return companyTutor;
 	}
 
 	public LocalDate getStartingDate() {
@@ -120,17 +110,11 @@ public class InternshipEntity {
 		this.id = id;
 	}
 
-	public void setInternshipId(UUID internshipId) {
-		this.internshipId = internshipId;
-	}
 
 	public void setStudent(StudentEntity student) {
 		this.student = student;
 	}
 
-	public void setCompany(CompanyEntity company) {
-		this.company = company;
-	}
 
 	public void setReport(ReportEntity report) {
 		this.report = report;
@@ -138,14 +122,6 @@ public class InternshipEntity {
 
 	public void setSoutenance(SoutenanceEntity soutenance) {
 		this.soutenance = soutenance;
-	}
-
-	public void setVisite(VisitEntity visite) {
-		this.visite = visite;
-	}
-
-	public void setCompanyTutor(CompanyTutorEntity companyTutor) {
-		this.companyTutor = companyTutor;
 	}
 
 	public void setStartingDate(LocalDate startingDate) {
@@ -163,9 +139,45 @@ public class InternshipEntity {
 	public void setWebSurvey(boolean webSurvey) {
 		this.webSurvey = webSurvey;
 	}
-	
-	
-	
-	
 
+
+	public String getCompanyName() {
+		return companyName;
+	}
+
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
+	}
+
+	public String getCompanyAddress() {
+		return companyAddress;
+	}
+
+	public void setCompanyAddress(String companyAddress) {
+		this.companyAddress = companyAddress;
+	}
+
+	public String getCompanyTutorFirstName() {
+		return companyTutorFirstName;
+	}
+
+	public void setCompanyTutorFirstName(String companyTutorFirstName) {
+		this.companyTutorFirstName = companyTutorFirstName;
+	}
+
+	public String getCompanyTutorLastName() {
+		return companyTutorLastName;
+	}
+
+	public void setCompanyTutorLastName(String companyTutorLastName) {
+		this.companyTutorLastName = companyTutorLastName;
+	}
+
+	public VisitEntity getVisit() {
+		return visit;
+	}
+
+	public void setVisit(VisitEntity visit) {
+		this.visit = visit;
+	}
 }

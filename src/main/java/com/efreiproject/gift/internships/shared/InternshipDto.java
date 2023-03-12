@@ -1,5 +1,12 @@
 package com.efreiproject.gift.internships.shared;
 
+import com.efreiproject.gift.model.Soutenance;
+import com.efreiproject.gift.reports.shared.ReportDto;
+import com.efreiproject.gift.soutenances.shared.SoutenanceDto;
+import com.efreiproject.gift.students.shared.StudentDto;
+import com.efreiproject.gift.visits.shared.VisitDto;
+import jakarta.persistence.Column;
+
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -7,25 +14,26 @@ import java.util.UUID;
 public class InternshipDto {
 	
 	private UUID id;
-	private UUID studentId;
-	private UUID companyTutorId;
+	private StudentDto student;
+	private String companyName;
+
+	private ReportDto report;
+	private SoutenanceDto soutenance;
+	private VisitDto visit;
+
+	private String companyAddress;
+
+	private String companyTutorFirstName;
+
+	private String companyTutorLastName;
 	private LocalDate startingDate;
 	private LocalDate endingDate;
 	private boolean specificationsDone;
 	private boolean webSurveyDone;
-	private UUID reportId;
-	private UUID soutenanceId;
-	private UUID visitId;
 	
 	
 	public UUID getId() {
 		return id;
-	}
-	public UUID getStudentId() {
-		return studentId;
-	}
-	public UUID getCompanyTutorId() {
-		return companyTutorId;
 	}
 	public LocalDate getStartingDate() {
 		return startingDate;
@@ -39,23 +47,8 @@ public class InternshipDto {
 	public boolean isWebSurveyDone() {
 		return webSurveyDone;
 	}
-	public UUID getReportId() {
-		return reportId;
-	}
-	public UUID getSoutenanceId() {
-		return soutenanceId;
-	}
-	public UUID getVisitId() {
-		return visitId;
-	}
 	public void setId(UUID id) {
 		this.id = id;
-	}
-	public void setStudentId(UUID studentId) {
-		this.studentId = studentId;
-	}
-	public void setCompanyTutorId(UUID companyTutorId) {
-		this.companyTutorId = companyTutorId;
 	}
 	public void setStartingDate(LocalDate startingDate) {
 		this.startingDate = startingDate;
@@ -63,22 +56,76 @@ public class InternshipDto {
 	public void setEndingDate(LocalDate endingDate) {
 		this.endingDate = endingDate;
 	}
-	public void setSpecificationsDone(boolean specificationsDone) {
-		this.specificationsDone = specificationsDone;
-	}
 	public void setWebSurveyDone(boolean webSurveyDone) {
 		this.webSurveyDone = webSurveyDone;
 	}
-	public void setReportId(UUID reportId) {
-		this.reportId = reportId;
-	}
-	public void setSoutenanceId(UUID soutenanceId) {
-		this.soutenanceId = soutenanceId;
-	}
-	public void setVisitId(UUID visitId) {
-		this.visitId = visitId;
-	}
-	
-	
 
+
+	public StudentDto getStudent() {
+		return student;
+	}
+
+	public void setStudent(StudentDto student) {
+		this.student = student;
+	}
+
+	public String getCompanyName() {
+		return companyName;
+	}
+
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
+	}
+
+	public ReportDto getReport() {
+		return report;
+	}
+
+	public void setReport(ReportDto report) {
+		this.report = report;
+	}
+
+	public SoutenanceDto getSoutenance() {
+		return soutenance;
+	}
+
+	public void setSoutenance(SoutenanceDto soutenance) {
+		this.soutenance = soutenance;
+	}
+
+	public VisitDto getVisit() {
+		return visit;
+	}
+
+	public void setVisit(VisitDto visit) {
+		this.visit = visit;
+	}
+
+	public String getCompanyAddress() {
+		return companyAddress;
+	}
+
+	public void setCompanyAddress(String companyAddress) {
+		this.companyAddress = companyAddress;
+	}
+
+	public String getCompanyTutorFirstName() {
+		return companyTutorFirstName;
+	}
+
+	public void setCompanyTutorFirstName(String companyTutorFirstName) {
+		this.companyTutorFirstName = companyTutorFirstName;
+	}
+
+	public String getCompanyTutorLastName() {
+		return companyTutorLastName;
+	}
+
+	public void setCompanyTutorLastName(String companyTutorLastName) {
+		this.companyTutorLastName = companyTutorLastName;
+	}
+
+	public void setSpecificationsDone(boolean specificationsDone) {
+		this.specificationsDone = specificationsDone;
+	}
 }

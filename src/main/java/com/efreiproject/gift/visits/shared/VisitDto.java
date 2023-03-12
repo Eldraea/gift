@@ -6,7 +6,7 @@ import java.util.UUID;
 public class VisitDto {
 
 	private long id;
-	private UUID visitId;
+	private long internshipId;
 	private LocalDate deadLineForVisit;
 	private boolean visitDone;
 	private String tutorNote;
@@ -14,9 +14,6 @@ public class VisitDto {
 	
 	public long getId() {
 		return id;
-	}
-	public UUID getVisitId() {
-		return visitId;
 	}
 	public LocalDate getDeadLineForVisit() {
 		return deadLineForVisit;
@@ -30,9 +27,6 @@ public class VisitDto {
 	public void setId(long id) {
 		this.id = id;
 	}
-	public void setVisitId(UUID visitId) {
-		this.visitId = visitId;
-	}
 	public void setDeadLineForVisit(LocalDate deadLineForVisit) {
 		this.deadLineForVisit = deadLineForVisit;
 	}
@@ -42,7 +36,13 @@ public class VisitDto {
 	public void setTutorNote(String tutorNote) {
 		this.tutorNote = tutorNote;
 	}
-	
 
-	
+
+	public long getInternshipId() {
+		return internshipId;
+	}
+
+	public void setInternshipId(long internshipId) {
+		this.internshipId = internshipId;
+	}
 }

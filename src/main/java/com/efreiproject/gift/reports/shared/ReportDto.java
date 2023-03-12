@@ -8,19 +8,18 @@ public class ReportDto {
 	
 	
 	private long id;
-	private UUID reportId;
+	private long internshipId;
 	private LocalDate deadLineForReport;
 	private boolean reportDone;
 	private float technicalMark;
 	private float communicationMark;
 	private String tutorNote;
+
+
 	
 	
 	public long getId() {
 		return id;
-	}
-	public UUID getReportId() {
-		return reportId;
 	}
 	public LocalDate getDeadLineForReport() {
 		return deadLineForReport;
@@ -40,9 +39,6 @@ public class ReportDto {
 	public void setId(long id) {
 		this.id = id;
 	}
-	public void setReportId(UUID reportId) {
-		this.reportId = reportId;
-	}
 	public void setDeadLineForReport(LocalDate deadLineForReport) {
 		this.deadLineForReport = deadLineForReport;
 	}
@@ -58,10 +54,13 @@ public class ReportDto {
 	public void setTutorNote(String tutorNote) {
 		this.tutorNote = tutorNote;
 	}
-	
-	
 
-	
-	
 
+	public long getInternshipId() {
+		return internshipId;
+	}
+
+	public void setInternshipId(long internshipId) {
+		this.internshipId = internshipId;
+	}
 }

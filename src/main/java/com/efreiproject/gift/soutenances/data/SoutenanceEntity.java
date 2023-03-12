@@ -3,7 +3,7 @@ package com.efreiproject.gift.soutenances.data;
 import java.time.LocalDate;
 import java.util.UUID;
 
-import com.efreiproject.gift.internships.controllers.InternshipEntity;
+import com.efreiproject.gift.internships.data.InternshipEntity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -19,11 +19,7 @@ public class SoutenanceEntity {
 	@Id
 	@GeneratedValue
 	private long id;
-	
-	@Column(nullable= false, unique = true)
-	private UUID soutenanceId;
-	
-	@Column(nullable= false)
+	@Column
 	private LocalDate deadLineForSoutenance;
 	
 	@Column(nullable= false)
@@ -31,7 +27,13 @@ public class SoutenanceEntity {
 	
 	@OneToOne(mappedBy="soutenance")
 	private InternshipEntity internship;
-	
+
+
+	@Column
+	private float technicalMark;
+
+	@Column
+	private float communicationMark;
 	
 	
 	public SoutenanceEntity() {
@@ -42,9 +44,6 @@ public class SoutenanceEntity {
 		return id;
 	}
 
-	public UUID getSoutenanceId() {
-		return soutenanceId;
-	}
 
 	public LocalDate getDeadLineForSoutenance() {
 		return deadLineForSoutenance;
@@ -62,17 +61,11 @@ public class SoutenanceEntity {
 		return communicationMark;
 	}
 
-	public String getTutorNote() {
-		return tutorNote;
-	}
 
 	public void setId(long id) {
 		this.id = id;
 	}
 
-	public void setSoutenanceId(UUID soutenanceId) {
-		this.soutenanceId = soutenanceId;
-	}
 
 	public void setDeadLineForSoutenance(LocalDate deadLineForSoutenance) {
 		this.deadLineForSoutenance = deadLineForSoutenance;
@@ -90,18 +83,11 @@ public class SoutenanceEntity {
 		this.communicationMark = communicationMark;
 	}
 
-	public void setTutorNote(String tutorNote) {
-		this.tutorNote = tutorNote;
+	public InternshipEntity getInternship() {
+		return internship;
 	}
 
-	@Column(nullable= false)
-	private float technicalMark;
-	
-	@Column(nullable= false)
-	private float communicationMark;
-	
-	@Column
-	private String tutorNote;
-	
-
+	public void setInternship(InternshipEntity internship) {
+		this.internship = internship;
+	}
 }

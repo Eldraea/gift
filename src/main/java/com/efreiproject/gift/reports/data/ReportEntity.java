@@ -3,7 +3,7 @@ package com.efreiproject.gift.reports.data;
 import java.time.LocalDate;
 import java.util.UUID;
 
-import com.efreiproject.gift.internships.controllers.InternshipEntity;
+import com.efreiproject.gift.internships.data.InternshipEntity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -19,9 +19,7 @@ public class ReportEntity {
 	@Id
 	@GeneratedValue
 	private long id;
-	
-	@Column(nullable= false, unique = true)
-	private UUID reportId;
+
 	
 	@Column(nullable= false)
 	private LocalDate deadLineForReport;
@@ -50,9 +48,6 @@ public class ReportEntity {
 	public long getId() {
 		return id;
 	}
-	public UUID getReportId() {
-		return reportId;
-	}
 	public LocalDate getDeadLineForReport() {
 		return deadLineForReport;
 	}
@@ -70,9 +65,6 @@ public class ReportEntity {
 	}
 	public void setId(long id) {
 		this.id = id;
-	}
-	public void setReportId(UUID reportId) {
-		this.reportId = reportId;
 	}
 	public void setDeadLineForReport(LocalDate deadLineForReport) {
 		this.deadLineForReport = deadLineForReport;
