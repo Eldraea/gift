@@ -49,13 +49,8 @@ public class TutorsController {
 
 	@GetMapping("/me")
 	public ResponseEntity<TutorMeDto> me() {
-
-		System.out.println(" oisjàidsjfosdjfoisdjiofjs");
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-		System.out.println(" doiqsos");
 		String email = ((UserDetails)authentication.getPrincipal()).getUsername();
-		System.out.println(email + " oisjàidsjfosdjfoisdjiofjs");
 		return ResponseEntity.status(HttpStatus.OK).body(tutorService.getTutorDetailsByEmail(email));
 	}
 

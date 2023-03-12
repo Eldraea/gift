@@ -12,46 +12,32 @@ import jakarta.validation.constraints.Size;
 
 public class StudentDto {
 
-	@NotNull
 	private long id;
 	
-	@NotNull(message= "The Identifier of the student cannot be null")
-	private UUID studentId;
+	private long schoolTutorId;
 	
-	@NotNull(message= "The Identifier of the schoolTutor cannot be null")
-	private UUID schoolTutorId;
-	
-	@NotNull(message="the firstname cannot be null")
-	@Size(min=2, message= "the firstName should have at least 2 characters")
 	private String firstName;
 	
-	@NotNull(message="the lastname cannot be null")
-	@Size(min=2, message="the lastName should have at least 2 characters" )
 	private String lastName;
 	
-	@NotNull(message="the phone number cannot be null")
 	private String phoneNumber;
 	
-	@NotNull(message="the email cannot be null")
-	@Email
 	private String email;
 	
-	@PastOrPresent(message= "Creation Date should be in the present or in the past")
 	private LocalDate creationDate;
-	
-	private String description;
+
 	
 	private String pictureUrl;
+
+	private String currentClass;
 
 	public long getId() {
 		return id;
 	}
 
-	public UUID getStudentId() {
-		return studentId;
-	}
 
-	public UUID getSchoolTutorId() {
+
+	public long getSchoolTutorId() {
 		return schoolTutorId;
 	}
 
@@ -75,9 +61,6 @@ public class StudentDto {
 		return creationDate;
 	}
 
-	public String getDescription() {
-		return description;
-	}
 
 	public String getPictureUrl() {
 		return pictureUrl;
@@ -87,11 +70,8 @@ public class StudentDto {
 		this.id = id;
 	}
 
-	public void setStudentId(UUID studentId) {
-		this.studentId = studentId;
-	}
 
-	public void setSchoolTutorId(UUID schoolTutorId) {
+	public void setSchoolTutorId(long schoolTutorId) {
 		this.schoolTutorId = schoolTutorId;
 	}
 
@@ -115,15 +95,17 @@ public class StudentDto {
 		this.creationDate = creationDate;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
 
 	public void setPictureUrl(String pictureUrl) {
 		this.pictureUrl = pictureUrl;
 	}
-	
-	
-	
-	
+
+
+	public String getCurrentClass() {
+		return currentClass;
+	}
+
+	public void setCurrentClass(String currentClass) {
+		this.currentClass = currentClass;
+	}
 }

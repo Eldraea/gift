@@ -94,7 +94,7 @@ private static final long serialVersionUID = 1214075402618036775L;
 		this.firstName = firstName;
 	}
 	public void setLastName(String lastName) {
-		this.lastName = lastName;
+		this.lastName = lastName.toUpperCase();
 	}
 	public void setEmail(String email) {
 		this.email = email;

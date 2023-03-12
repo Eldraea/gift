@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import com.efreiproject.gift.tutors.data.TutorEntity;
 import com.efreiproject.gift.tutors.shared.TutorMeDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,13 +50,23 @@ public class StudentsController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String tutorEmail = ((UserDetails)authentication.getPrincipal()).getUsername();
 		TutorMeDto tutorDto = tutorService.getTutorDetailsByEmail(tutorEmail);
-		List<StudentDto> studentsDtos =studentService.getStudentsDetailsByTutorId(tutorDto.getId());
+		TutorEntity tutorEntity = new ModelMapper().map(tutorDto, TutorEntity.class);
+		List<StudentDto> studentsDtos =studentService.getStudentsDetailsByTutorId(tutorEntity);
 		List<Student> students = new ArrayList<Student>();
 		for(StudentDto studentDto : studentsDtos)
 			students.add(new ModelMapper().map(studentDto, Student.class));
-		
 		return new ResponseEntity<List<Student>>(students, HttpStatus.OK);
 	}
+	@GetMapping("/{id}")
+	public ResponseEntity<Student> getStudent(@PathVariable long id){
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String tutorEmail = ((UserDetails)authentication.getPrincipal()).getUsername();
+		TutorMeDto tutorDto = tutorService.getTutorDetailsByEmail(tutorEmail);
+		TutorEntity tutorEntity = new ModelMapper().map(tutorDto, TutorEntity.class);
+		StudentDto student = studentService.getStudentsDetailsByIdAndTutorId(id, tutorEntity);
+		return new ResponseEntity<Student>(new ModelMapper().map(student, Student.class), HttpStatus.OK);
+	}
+
 
 	
 	@PostMapping
@@ -65,31 +76,28 @@ public class StudentsController {
 		String tutorEmail = ((UserDetails)authentication.getPrincipal()).getUsername();
 		TutorMeDto tutorDto = tutorService.getTutorDetailsByEmail(tutorEmail);
 		StudentDto studentDto = new ModelMapper().map(student, StudentDto.class);
-		studentDto.setCreationDate(LocalDate.now());
-		studentDto.setSchoolTutorId(tutorDto.getTutorId());
-		studentDto.setStudentId(UUID.randomUUID());
-		studentService.createStudent(studentDto);
-		
-		return new ResponseEntity<Student>(student, HttpStatus.CREATED);
+		studentDto.setSchoolTutorId(tutorDto.getId());
+		StudentDto savedStudent = studentService.createStudent(studentDto);
+		return new ResponseEntity<Student>(	new ModelMapper().map(savedStudent, Student.class), HttpStatus.CREATED);
 	}
 	
-	@PutMapping("/students/{id}")
+	@PutMapping("/{id}")
 	public ResponseEntity<Student> updateStudent(@PathVariable long id, @Valid @RequestBody Student student){
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String tutorEmail = ((UserDetails)authentication.getPrincipal()).getUsername();
 		TutorMeDto tutorDto = tutorService.getTutorDetailsByEmail(tutorEmail);
 		StudentDto studentDto = new ModelMapper().map(student, StudentDto.class);
-		studentService.updateStudent(id, studentDto);
-		return new ResponseEntity<Student>(student, HttpStatus.OK);
+		StudentDto savedStudent = studentService.updateStudent(tutorDto.getId(), id, studentDto);
+		return new ResponseEntity<Student>(new ModelMapper().map(savedStudent, Student.class), HttpStatus.OK);
 	}
 	
-	@DeleteMapping("/students/{id}")
-	public ResponseEntity<Void> deleteStudent(@PathVariable long id){
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Boolean> deleteStudent(@PathVariable Long id){
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String tutorEmail = ((UserDetails)authentication.getPrincipal()).getUsername();
-		TutorMeDto tutorDto = tutorService.getTutorDetailsByEmail(tutorEmail);
-		studentService.deleteStudentById(id, tutorDto.getId());
-		return new ResponseEntity<Void>( HttpStatus.OK);
+		TutorEntity tutorEntity = new ModelMapper().map(tutorService.getTutorDetailsByEmail(tutorEmail), TutorEntity.class);
+		boolean deleted = studentService.deleteStudentById(id, tutorEntity);
+		return new ResponseEntity<Boolean>(deleted, deleted ? HttpStatus.OK : HttpStatus.NOT_FOUND);
 	}
 
 		

@@ -1,9 +1,14 @@
 package com.efreiproject.gift.students.data;
 
+import com.efreiproject.gift.tutors.data.TutorEntity;
+
 import java.util.List;
 
 
 public interface StudentRepositoryCustom {
-	List<StudentEntity> getStudentsByTutorId(long id);
-	StudentEntity getStudentsByStudentIdAndTutorId(long studentId, long tutorId);
+	List<StudentEntity> getStudentsByTutorId(TutorEntity tutorId);
+	StudentEntity getStudentByIdAndTutorId(long id, TutorEntity tutorId);
+
+	void deleteByIdAndTutorId(Long id, TutorEntity entity);
+
 }

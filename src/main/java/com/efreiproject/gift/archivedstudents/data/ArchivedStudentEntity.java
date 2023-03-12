@@ -19,6 +19,7 @@ public class ArchivedStudentEntity {
 	@Id
 	@GeneratedValue
 	private long id;
+
 	
 	@Column(nullable= false, unique= true)
 	private UUID studentId;
