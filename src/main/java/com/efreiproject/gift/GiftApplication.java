@@ -9,5 +9,4 @@ public class GiftApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(GiftApplication.class, args);
 	}
-
 }

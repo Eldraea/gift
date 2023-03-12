@@ -7,6 +7,7 @@ import java.util.UUID;
 import com.efreiproject.gift.auth.JwtUtil;
 import com.efreiproject.gift.tutors.model.LoginRequestModel;
 import com.efreiproject.gift.tutors.model.TokenResponse;
+import com.efreiproject.gift.tutors.shared.TutorMeDto;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,11 +70,11 @@ public class TutorServiceImplementation implements TutorService {
 	}
 
 	@Override
-	public TutorDto getTutorDetailsByEmail(String email) {
+	public TutorMeDto getTutorDetailsByEmail(String email) {
 		TutorEntity tutorEntity = tutorRepository.getTutorByEmail(email);
 		if(tutorEntity == null)
 			throw new TutorNotFoundException(email);
-		return new ModelMapper().map(tutorEntity, TutorDto.class);
+		return new ModelMapper().map(tutorEntity, TutorMeDto.class);
 	}
 
 	@Override

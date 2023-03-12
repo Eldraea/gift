@@ -2,6 +2,7 @@ package com.efreiproject.gift.tutors.controller;
 
 import com.efreiproject.gift.tutors.model.LoginRequestModel;
 import com.efreiproject.gift.tutors.model.TokenResponse;
+import com.efreiproject.gift.tutors.shared.TutorMeDto;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.efreiproject.gift.tutors.model.CreateTutorRequestModel;
 import com.efreiproject.gift.tutors.model.CreateTutorResponseModel;
@@ -49,12 +47,16 @@ public class TutorsController {
 		}
 	}
 
-	@PostMapping("/test")
-	public Boolean test() {
-		// TODO: to be removed
+	@GetMapping("/me")
+	public ResponseEntity<TutorMeDto> me() {
+
+		System.out.println(" oisjàidsjfosdjfoisdjiofjs");
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		System.out.println(((UserDetails)authentication.getPrincipal()).getUsername());
-		return true;
+
+		System.out.println(" doiqsos");
+		String email = ((UserDetails)authentication.getPrincipal()).getUsername();
+		System.out.println(email + " oisjàidsjfosdjfoisdjiofjs");
+		return ResponseEntity.status(HttpStatus.OK).body(tutorService.getTutorDetailsByEmail(email));
 	}
 
 }
