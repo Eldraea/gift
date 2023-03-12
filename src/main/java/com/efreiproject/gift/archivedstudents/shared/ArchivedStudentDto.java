@@ -9,7 +9,7 @@ public class ArchivedStudentDto {
 	
 	
 	private UUID id;
-	private UUID schoolTutorId;
+	private UUID schoolTutor;
 	private String firstName;
 	private String lastName;
 	private String phoneNumber;
@@ -24,7 +24,7 @@ public class ArchivedStudentDto {
 		return id;
 	}
 	public UUID getSchoolTutorId() {
-		return schoolTutorId;
+		return schoolTutor;
 	}
 	public String getFirstName() {
 		return firstName;
@@ -54,7 +54,7 @@ public class ArchivedStudentDto {
 		this.id = id;
 	}
 	public void setSchoolTutorId(UUID schoolTutorId) {
-		this.schoolTutorId = schoolTutorId;
+		this.schoolTutor = schoolTutorId;
 	}
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;

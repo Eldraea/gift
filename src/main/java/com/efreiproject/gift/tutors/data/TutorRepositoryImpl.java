@@ -20,10 +20,10 @@ public class TutorRepositoryImpl implements TutorRepositoryCustom {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<TutorEntity> cq = cb.createQuery(TutorEntity.class);
 
-        Root<TutorEntity> book = cq.from(TutorEntity.class);
+        Root<TutorEntity> fitler = cq.from(TutorEntity.class);
         List<Predicate> predicates = new ArrayList<>();
 
-        predicates.add(cb.equal(book.get("email"), email));
+        predicates.add(cb.equal(fitler.get("email"), email));
         cq.where(predicates.toArray(new Predicate[0]));
         List<TutorEntity> resultList = em.createQuery(cq).getResultList();
         return resultList.isEmpty() ? null : resultList.get(0);
@@ -34,10 +34,10 @@ public class TutorRepositoryImpl implements TutorRepositoryCustom {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<TutorEntity> cq = cb.createQuery(TutorEntity.class);
 
-        Root<TutorEntity> book = cq.from(TutorEntity.class);
+        Root<TutorEntity> fitler = cq.from(TutorEntity.class);
         List<Predicate> predicates = new ArrayList<>();
 
-        predicates.add(cb.equal(book.get("username"), username));
+        predicates.add(cb.equal(fitler.get("username"), username));
         cq.where(predicates.toArray(new Predicate[0]));
         List<TutorEntity> resultList = em.createQuery(cq).getResultList();
         return resultList.isEmpty() ? null : resultList.get(0);

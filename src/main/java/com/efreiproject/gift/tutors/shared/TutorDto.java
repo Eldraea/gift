@@ -8,9 +8,9 @@ import com.efreiproject.gift.students.data.StudentEntity;
 
 public class TutorDto implements Serializable {
 	
-	
 	private static final long serialVersionUID = 2214309915494222447L;
 
+	private long id;
 	private UUID tutorId;
 	private String firstName;
 	private String lastName;
@@ -83,6 +83,14 @@ public class TutorDto implements Serializable {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	public long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
+	}
+	
+	
 	
 	
 	

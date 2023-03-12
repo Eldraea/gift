@@ -7,14 +7,7 @@ import java.util.UUID;
 import com.efreiproject.gift.internships.controllers.InternshipEntity;
 import com.efreiproject.gift.tutors.data.TutorEntity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name ="student")
@@ -23,12 +16,11 @@ public class StudentEntity {
 	@Id
 	@GeneratedValue
 	private long id;
-	
-	@Column(nullable= false, unique= true)
-	private UUID studentId;
-	
+
+	@Column
+	private Long studentId;
 	@ManyToOne(fetch= FetchType.LAZY)
-	private TutorEntity schoolTutor;
+	private TutorEntity tutorId;
 	
 	@Column(nullable= false)
 	private String firstName;
@@ -41,26 +33,26 @@ public class StudentEntity {
 	
 	@Column(nullable= false)
 	private String phoneNumber;
+
 	
-	@Column(nullable= false)
-	private String Option;
-	
-	@Column(nullable= false)
+	@Column(nullable= false, unique = true)
 	private String email;
 	
 	@Column(nullable= false)
+
 	private LocalDate creationDate;
-	
-	@Column
-	private String description;
 	
 	@Column
 	private String pictureUrl;
 	
 	@OneToMany(mappedBy="student")
 	private List<InternshipEntity> internships;
-	
-	
+
+
+	@PrePersist
+	void createdAt() {
+		this.creationDate =LocalDate.now();
+	}
 
 	public StudentEntity() {
 		super();
@@ -70,12 +62,9 @@ public class StudentEntity {
 		return id;
 	}
 
-	public UUID getStudentId() {
-		return studentId;
-	}
 
 	public TutorEntity getSchoolTutor() {
-		return schoolTutor;
+		return tutorId;
 	}
 
 	public String getFirstName() {
@@ -94,10 +83,6 @@ public class StudentEntity {
 		return phoneNumber;
 	}
 
-	public String getOption() {
-		return Option;
-	}
-
 	public String getEmail() {
 		return email;
 	}
@@ -106,9 +91,6 @@ public class StudentEntity {
 		return creationDate;
 	}
 
-	public String getDescription() {
-		return description;
-	}
 
 	public String getPictureUrl() {
 		return pictureUrl;
@@ -122,12 +104,9 @@ public class StudentEntity {
 		this.id = id;
 	}
 
-	public void setStudentId(UUID studentId) {
-		this.studentId = studentId;
-	}
 
 	public void setSchoolTutor(TutorEntity schoolTutor) {
-		this.schoolTutor = schoolTutor;
+		this.tutorId = schoolTutor;
 	}
 
 	public void setFirstName(String firstName) {
@@ -146,10 +125,6 @@ public class StudentEntity {
 		this.phoneNumber = phoneNumber;
 	}
 
-	public void setOption(String option) {
-		Option = option;
-	}
-
 	public void setEmail(String email) {
 		this.email = email;
 	}
@@ -158,9 +133,6 @@ public class StudentEntity {
 		this.creationDate = creationDate;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
 
 	public void setPictureUrl(String pictureUrl) {
 		this.pictureUrl = pictureUrl;
@@ -169,5 +141,12 @@ public class StudentEntity {
 	public void setInternships(List<InternshipEntity> internships) {
 		this.internships = internships;
 	}
-	
+
+	public Long getStudentId() {
+		return studentId;
+	}
+
+	public void setStudentId(Long studentId) {
+		this.studentId = studentId;
+	}
 }

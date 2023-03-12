@@ -4,9 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import com.efreiproject.gift.tutors.data.TutorEntity;
+import com.efreiproject.gift.tutors.service.TutorService;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.efreiproject.gift.archivedstudents.data.ArchivedStudentEntity;
+import com.efreiproject.gift.archivedstudents.shared.ArchivedStudentDto;
 import com.efreiproject.gift.exceptions.StudentAlreadyExistsException;
 import com.efreiproject.gift.exceptions.StudentNotFoundException;
 import com.efreiproject.gift.exceptions.StudentNullPointerException;
@@ -14,13 +20,18 @@ import com.efreiproject.gift.students.data.StudentEntity;
 import com.efreiproject.gift.students.data.StudentRepository;
 import com.efreiproject.gift.students.shared.StudentDto;
 
+@Transactional
 @Service
 public class StudentServiceImplementation implements StudentService {
 	
 	private StudentRepository studentRepository;
+
+	@Autowired
+	private TutorService tutorService;
 	
-	public StudentServiceImplementation(StudentRepository studentRepository) {
+	public StudentServiceImplementation(StudentRepository studentRepository, TutorService tutorService) {
 		this.studentRepository = studentRepository;
+		this.tutorService = tutorService;
 	}
 	
 	
@@ -33,43 +44,68 @@ public class StudentServiceImplementation implements StudentService {
 	}
 	
 	public StudentDto getStudent(long id) {
-		StudentEntity studentEntity = studentRepository.findById(id).get();
+		StudentEntity studentEntity = studentRepository.findById(id).orElseGet(() -> null);
 		if(studentEntity == null)
 			throw new StudentNotFoundException("There is no student with the id" + id);
 		return new ModelMapper().map(studentEntity, StudentDto.class);
 	}
 	
-	public StudentDto updateStudent(StudentDto studentToUpdate) {
+	public StudentDto updateStudent(long tutorId, long id, StudentDto studentToUpdate) {
 		if(studentToUpdate == null)
 			throw new StudentNullPointerException("You must provide a student");
-		StudentEntity studentEntity = studentRepository.findById(studentToUpdate.getId()).get();
+		StudentEntity studentEntity = studentRepository.findById(id).orElseGet(() -> null);
 		if(studentEntity == null)
 			throw new StudentNotFoundException("There is no student with the id" + studentToUpdate.getId());
-		studentRepository.save(studentEntity);
-		return studentToUpdate;
+		if(studentEntity.getSchoolTutor().getId() != tutorId)
+			throw new StudentNotFoundException("There is no student with the id" + studentToUpdate.getId());
+
+		studentEntity.setEmail(studentToUpdate.getEmail());
+		studentEntity.setFirstName(studentToUpdate.getFirstName());
+		studentEntity.setLastName(studentToUpdate.getLastName());
+		studentEntity.setPhoneNumber(studentToUpdate.getPhoneNumber());
+		studentEntity.setPictureUrl(studentToUpdate.getPictureUrl());
+		studentEntity.setCurrentClass(studentToUpdate.getCurrentClass());
+
+		StudentEntity savedStudent = studentRepository.save(studentEntity);
+		return new ModelMapper().map(savedStudent, StudentDto.class);
 		
 	}
 	
 	public StudentDto createStudent(StudentDto studentToCreate){
 		if(studentToCreate == null)
 			throw new StudentNullPointerException("You must provide a student");
-		StudentEntity studentEntity = studentRepository.findById(studentToCreate.getId()).get();
-		if(studentEntity != null)
-			throw new StudentAlreadyExistsException("The student with the id" + studentToCreate.getId() + " already exists");
-		studentRepository.save(studentEntity);
-		return studentToCreate;
-	}
-	
-	public void deleteStudentById(long id) {
-		StudentEntity studentEntity = studentRepository.findById(id).get();
-		if(studentEntity == null)
-			throw new StudentNotFoundException("There is no student with the id" + id);
-		studentRepository.delete(studentEntity);
+		StudentEntity savedStudent = studentRepository.save(new ModelMapper().map(studentToCreate, StudentEntity.class));
+		return new ModelMapper().map(savedStudent, StudentDto.class);
 	}
 
-	
+	@Override
+	public StudentDto getStudentsDetailsByIdAndTutorId(Long id, TutorEntity tutor) {
+		System.out.println(id);
+		System.out.println(tutor.getId());
+		StudentEntity student = studentRepository.getStudentByIdAndTutorId(id, tutor);
+		if(student == null){
+			throw new StudentNotFoundException("Student not found");
+		}
+		return new ModelMapper().map(student, StudentDto.class);
+	}
+
+	@Override
+	public boolean deleteStudentById(Long id,TutorEntity tutor) {
+		studentRepository.deleteByIdAndTutorId(id,tutor);
+		return true;
+	}
 
 
-	
+	@Override
+	public List<StudentDto> getStudentsDetailsByTutorId(TutorEntity tutor) {
+		List<StudentEntity> studentEntities =  studentRepository.getStudentsByTutorId(tutor);
+		return studentEntities.stream().map((student) -> new ModelMapper().map(student, StudentDto.class)).toList();
+	}
+
+	@Override
+	public StudentDto getStudentDetailsByStudentIdAndTutorId(long studentId, long tutorId) {
+		return null;
+	}
+
 
 }

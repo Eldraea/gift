@@ -1,101 +1,63 @@
-package com.efreiproject.gift.students.shared;
-
-import java.time.LocalDate;
-
-import java.util.UUID;
+package com.efreiproject.gift.students.model;
 
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Size;
 
-public class StudentDto {
+public class Student {
 
+	@NotNull(message="the id cannot be null")
 	private long id;
-	
-	private long schoolTutorId;
-	
+	@NotNull(message="the firstname cannot be null")
+	@Size(min=2, message= "the firstName should have at least 2 characters")
 	private String firstName;
-	
-	private String lastName;
-	
-	private String phoneNumber;
-	
-	private String email;
-	
-	private LocalDate creationDate;
 
-	
+	@NotNull(message="the lastname cannot be null")
+	@Size(min=2, message="the lastName should have at least 2 characters" )
+
+	private String lastName;
+	@NotNull(message="the phone number cannot be null")
+	private String phoneNumber;
+
+	@NotNull(message="the email cannot be null")
+	@Email
+	private String email;
+	@NotNull(message="the pictureUrl cannot be null")
 	private String pictureUrl;
 
+	@NotNull(message="the currentClass cannot be null")
 	private String currentClass;
-
-	public long getId() {
-		return id;
-	}
-
-
-
-	public long getSchoolTutorId() {
-		return schoolTutorId;
-	}
-
+	
+	
 	public String getFirstName() {
 		return firstName;
 	}
-
 	public String getLastName() {
 		return lastName;
 	}
-
 	public String getPhoneNumber() {
 		return phoneNumber;
 	}
-
 	public String getEmail() {
 		return email;
 	}
 
-	public LocalDate getCreationDate() {
-		return creationDate;
-	}
-
-
 	public String getPictureUrl() {
 		return pictureUrl;
 	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-
-	public void setSchoolTutorId(long schoolTutorId) {
-		this.schoolTutorId = schoolTutorId;
-	}
-
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
-
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
-
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
-	public void setCreationDate(LocalDate creationDate) {
-		this.creationDate = creationDate;
-	}
-
-
 	public void setPictureUrl(String pictureUrl) {
 		this.pictureUrl = pictureUrl;
 	}
@@ -107,5 +69,13 @@ public class StudentDto {
 
 	public void setCurrentClass(String currentClass) {
 		this.currentClass = currentClass;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
 	}
 }

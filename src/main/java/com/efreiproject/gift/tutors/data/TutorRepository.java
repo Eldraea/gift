@@ -1,8 +1,8 @@
 package com.efreiproject.gift.tutors.data;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 
-public interface TutorRepository extends JpaRepository<TutorEntity, Long>, TutorRepositoryCustom {
+public interface TutorRepository extends CrudRepository<TutorEntity, Long>, TutorRepositoryCustom {
 
 
 }
