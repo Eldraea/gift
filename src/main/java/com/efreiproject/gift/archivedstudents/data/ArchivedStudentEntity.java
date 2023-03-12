@@ -24,7 +24,7 @@ public class ArchivedStudentEntity {
 	private UUID studentId;
 	
 	@ManyToOne(fetch= FetchType.LAZY)
-	private TutorEntity schoolTutor;
+	private TutorEntity tutorId;
 	
 	@Column(nullable= false)
 	private String firstName;
@@ -71,7 +71,7 @@ public class ArchivedStudentEntity {
 	}
 
 	public TutorEntity getSchoolTutor() {
-		return schoolTutor;
+		return tutorId;
 	}
 
 	public String getFirstName() {
@@ -123,7 +123,7 @@ public class ArchivedStudentEntity {
 	}
 
 	public void setSchoolTutor(TutorEntity schoolTutor) {
-		this.schoolTutor = schoolTutor;
+		this.tutorId = schoolTutor;
 	}
 
 	public void setFirstName(String firstName) {

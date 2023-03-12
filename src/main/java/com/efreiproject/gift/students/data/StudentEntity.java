@@ -8,6 +8,7 @@ import com.efreiproject.gift.internships.controllers.InternshipEntity;
 import com.efreiproject.gift.tutors.data.TutorEntity;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -28,7 +29,7 @@ public class StudentEntity {
 	private UUID studentId;
 	
 	@ManyToOne(fetch= FetchType.LAZY)
-	private TutorEntity schoolTutor;
+	private TutorEntity tutorId;
 	
 	@Column(nullable= false)
 	private String firstName;
@@ -75,7 +76,7 @@ public class StudentEntity {
 	}
 
 	public TutorEntity getSchoolTutor() {
-		return schoolTutor;
+		return tutorId;
 	}
 
 	public String getFirstName() {
@@ -127,7 +128,7 @@ public class StudentEntity {
 	}
 
 	public void setSchoolTutor(TutorEntity schoolTutor) {
-		this.schoolTutor = schoolTutor;
+		this.tutorId = schoolTutor;
 	}
 
 	public void setFirstName(String firstName) {

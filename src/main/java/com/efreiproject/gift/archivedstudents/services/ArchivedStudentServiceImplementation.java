@@ -11,6 +11,7 @@ import com.efreiproject.gift.archivedstudents.data.ArchivedStudentEntity;
 import com.efreiproject.gift.archivedstudents.data.ArchivedStudentRepository;
 import com.efreiproject.gift.archivedstudents.shared.ArchivedStudentDto;
 
+
 @Service
 public class ArchivedStudentServiceImplementation implements ArchivedStudentService {
 	
@@ -28,6 +29,18 @@ public class ArchivedStudentServiceImplementation implements ArchivedStudentServ
 		    students.add(new ModelMapper().map(archivedStudent, ArchivedStudentDto.class));
 		}
 		return students;
+	}
+
+	@Override
+	public List<ArchivedStudentDto> getArchivedStudentsDetailsByTutorId(long id) {
+		List<ArchivedStudentEntity> archivedStudentEntities =  archivedStudentRepository.getArchivedStudentsByTutorId(id);
+		List<ArchivedStudentDto> archivedStudentDtos = new ArrayList<ArchivedStudentDto>();
+		if(archivedStudentEntities.isEmpty())
+			return new ArrayList<ArchivedStudentDto>();
+		for(ArchivedStudentEntity archivedStudentEntity : archivedStudentEntities)
+		  archivedStudentDtos.add(new ModelMapper().map(archivedStudentEntity, ArchivedStudentDto.class));
+	
+		return archivedStudentDtos;
 	}
 
 }

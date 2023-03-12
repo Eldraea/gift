@@ -7,6 +7,8 @@ import java.util.UUID;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import com.efreiproject.gift.archivedstudents.data.ArchivedStudentEntity;
+import com.efreiproject.gift.archivedstudents.shared.ArchivedStudentDto;
 import com.efreiproject.gift.exceptions.StudentAlreadyExistsException;
 import com.efreiproject.gift.exceptions.StudentNotFoundException;
 import com.efreiproject.gift.exceptions.StudentNullPointerException;
@@ -39,32 +41,52 @@ public class StudentServiceImplementation implements StudentService {
 		return new ModelMapper().map(studentEntity, StudentDto.class);
 	}
 	
-	public StudentDto updateStudent(StudentDto studentToUpdate) {
+	public StudentDto updateStudent(long id, StudentDto studentToUpdate) {
 		if(studentToUpdate == null)
 			throw new StudentNullPointerException("You must provide a student");
 		StudentEntity studentEntity = studentRepository.findById(studentToUpdate.getId()).get();
 		if(studentEntity == null)
 			throw new StudentNotFoundException("There is no student with the id" + studentToUpdate.getId());
+		studentToUpdate.setId(id);
+		studentToUpdate.setCreationDate(studentEntity.getCreationDate());
+		studentToUpdate.setSchoolTutorId(studentEntity.getSchoolTutor().getTutorId());
 		studentRepository.save(studentEntity);
 		return studentToUpdate;
 		
 	}
 	
 	public StudentDto createStudent(StudentDto studentToCreate){
-		if(studentToCreate == null)
+		if(studentToCreate == null) {
 			throw new StudentNullPointerException("You must provide a student");
+		}
+			
 		StudentEntity studentEntity = studentRepository.findById(studentToCreate.getId()).get();
 		if(studentEntity != null)
 			throw new StudentAlreadyExistsException("The student with the id" + studentToCreate.getId() + " already exists");
-		studentRepository.save(studentEntity);
+		System.out.println("erreur là");
+		studentRepository.save(new ModelMapper().map(studentToCreate, StudentEntity.class));
+		System.out.println("erreur ici");
 		return studentToCreate;
 	}
 	
-	public void deleteStudentById(long id) {
-		StudentEntity studentEntity = studentRepository.findById(id).get();
+	public void deleteStudentById(long id, long tutorId) {
+		List<StudentEntity> studentEntities =  studentRepository.getStudentsByTutorId(id);
+		StudentEntity studentEntity = studentEntities.stream().filter(student -> student.getSchoolTutor().getId() == tutorId).toList().get(0);
 		if(studentEntity == null)
 			throw new StudentNotFoundException("There is no student with the id" + id);
 		studentRepository.delete(studentEntity);
+	}
+
+
+	@Override
+	public List<StudentDto> getStudentsDetailsByTutorId(long id) {
+		List<StudentEntity> studentEntities =  studentRepository.getStudentsByTutorId(id);
+		List<StudentDto> studentDtos = new ArrayList<StudentDto>();
+		if(studentEntities.isEmpty())
+			return new ArrayList<StudentDto>();
+		for(StudentEntity studentEntity : studentEntities)
+		  studentDtos.add(new ModelMapper().map(studentEntity, StudentDto.class));
+		return studentDtos;
 	}
 
 	

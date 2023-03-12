@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class TutorMeDto implements Serializable {
-
+    private long id;
     private UUID tutorId;
     private String firstName;
     private String lastName;
@@ -16,6 +16,12 @@ public class TutorMeDto implements Serializable {
     private String phoneNumber;
     private String pictureUrl;
 
+    public long getId() {
+        return id;
+    }
+    public void setId(long id) {
+        this.id = id;
+    }
     public String getFirstName() {
         return firstName;
     }

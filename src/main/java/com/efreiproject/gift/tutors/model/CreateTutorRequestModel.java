@@ -29,6 +29,8 @@ public class CreateTutorRequestModel {
 	@Size(min=5, message="Profession must be greater than 5 characters")
 	private String profession;
 	
+	private String pictureUrl;
+	
 	
 	
 	public String getFirstName() {
@@ -67,6 +69,13 @@ public class CreateTutorRequestModel {
 	public void setProfession(String profession) {
 		this.profession = profession;
 	}
+	public String getPictureUrl() {
+		return pictureUrl;
+	}
+	public void setPictureUrl(String pictureUrl) {
+		this.pictureUrl = pictureUrl;
+	}
+	
 	
 	
 	

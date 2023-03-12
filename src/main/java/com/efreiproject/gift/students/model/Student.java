@@ -1,31 +1,17 @@
-package com.efreiproject.gift.archivedstudents.shared;
-
-import java.time.LocalDate;
-import java.util.UUID;
+package com.efreiproject.gift.students.model;
 
 
 
-public class ArchivedStudentDto {
+public class Student {
 	
-	
-	private UUID id;
-	private UUID schoolTutor;
 	private String firstName;
 	private String lastName;
 	private String phoneNumber;
 	private String email;
-	private LocalDate creationDate;
 	private String description;
 	private String pictureUrl;
-	private boolean isGraduated;
 	
 	
-	public UUID getId() {
-		return id;
-	}
-	public UUID getSchoolTutorId() {
-		return schoolTutor;
-	}
 	public String getFirstName() {
 		return firstName;
 	}
@@ -38,23 +24,12 @@ public class ArchivedStudentDto {
 	public String getEmail() {
 		return email;
 	}
-	public LocalDate getCreationDate() {
-		return creationDate;
-	}
+	
 	public String getDescription() {
 		return description;
 	}
 	public String getPictureUrl() {
 		return pictureUrl;
-	}
-	public boolean isGraduated() {
-		return isGraduated;
-	}
-	public void setId(UUID id) {
-		this.id = id;
-	}
-	public void setSchoolTutorId(UUID schoolTutorId) {
-		this.schoolTutor = schoolTutorId;
 	}
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
@@ -68,17 +43,11 @@ public class ArchivedStudentDto {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public void setCreationDate(LocalDate creationDate) {
-		this.creationDate = creationDate;
-	}
 	public void setDescription(String description) {
 		this.description = description;
 	}
 	public void setPictureUrl(String pictureUrl) {
 		this.pictureUrl = pictureUrl;
-	}
-	public void setGraduated(boolean isGraduated) {
-		this.isGraduated = isGraduated;
 	}
 	
 	
